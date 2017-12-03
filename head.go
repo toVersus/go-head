@@ -28,6 +28,7 @@ func main() {
 			fmt.Fprintf(os.Stderr, "cannot open a specified file")
 			os.Exit(1)
 		}
+		defer f.Close()
 
 		if err := doHead(f, nlines); err != nil {
 			fmt.Fprintf(os.Stderr, "%s\n", err.Error())
