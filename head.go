@@ -16,16 +16,16 @@ func main() {
 		os.Exit(1)
 	}
 
+	nlines, err := strconv.Atoi(argv[1])
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
+		os.Exit(1)
+	}
+
 	for i := 2; i < argc; i++ {
 		f, err := os.Open(argv[i])
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "cannot open a specified file")
-			os.Exit(1)
-		}
-
-		nlines, err := strconv.Atoi(argv[1])
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "%s\n", err.Error())
 			os.Exit(1)
 		}
 
