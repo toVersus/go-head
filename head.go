@@ -11,20 +11,28 @@ func main() {
 	argv := os.Args
 	argc := len(argv)
 
-	if argc != 2 {
-		fmt.Fprintf(os.Stderr, "Usage: %s Argc: %s\n", argv[0], argv)
+	if argc < 2 {
+		fmt.Fprintf(os.Stderr, "Usage: %s n [file file...]\n", argv[0])
 		os.Exit(1)
 	}
 
-	nlines, err := strconv.Atoi(argv[1])
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
-		os.Exit(1)
-	}
+	for i := 2; i < argc; i++ {
+		f, err := os.Open(argv[i])
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "cannot open a specified file")
+			os.Exit(1)
+		}
 
-	if err := doHead(os.Stdin, nlines); err != nil {
-		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
-		os.Exit(1)
+		nlines, err := strconv.Atoi(argv[1])
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "%s\n", err.Error())
+			os.Exit(1)
+		}
+
+		if err := doHead(f, nlines); err != nil {
+			fmt.Fprintf(os.Stderr, "%s\n", err.Error())
+			os.Exit(1)
+		}
 	}
 }
 
